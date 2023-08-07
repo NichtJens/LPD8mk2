@@ -1,9 +1,13 @@
 # References
+## Device
 - https://www.akaipro.com/lpd8-mk2
+## LPD8 mk1 libs
 - https://github.com/charlesfleche/lpd8editor/blob/master/doc/SYSEX.md
 - https://github.com/bennigraf/lpd8-web-editor/blob/main/lpd8-web-editor-preact/src/LPD8Preset.js
 - https://github.com/DrLuke/python-lpd8/
 - https://github.com/zetof/LPD8/
+## MIDI
+- Identity Request: http://midi.teragonaudio.com/tech/midispec/identity.htm
 
 # Capturing MIDI via Wireshark
 - The official "Program Editor" for Windows starts in Wine under Linux, but does not connect to the device.
