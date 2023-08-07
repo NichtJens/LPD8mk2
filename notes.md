@@ -8,6 +8,8 @@
 - https://github.com/zetof/LPD8/
 ## MIDI
 - Identity Request: http://midi.teragonaudio.com/tech/midispec/identity.htm
+- Universal SysEx: https://www.midi.org/specifications-old/item/table-4-universal-system-exclusive-messages
+- Wireshark filter: https://www.wireshark.org/docs/dfref/s/sysex.html
 
 # Capturing MIDI via Wireshark
 - The official "Program Editor" for Windows starts in Wine under Linux, but does not connect to the device.
