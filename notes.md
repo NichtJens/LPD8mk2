@@ -13,3 +13,7 @@
   - https://developer.apple.com/documentation/security/disabling_and_enabling_system_integrity_protection
   - TL;DR: reboot to recovery mode and `csrutil disable`
 - The LPD8 needs to be plugged in while Wireshark is already capturing, otherwise Wireshark reads the MIDI messages as generic USB messages.
+
+# Random stuff
+- "Note On" etc. also contain the channel number: http://midi.teragonaudio.com/tech/midispec/noteon.htm
+- The mido callback mechanism is weird for IOPorts: The constructor argument doesn't seem to do anything. Setting `ioport.callback = func` enables the exception on receive etc., but the callback is not triggering. Setting `ioport.input.callback = func` works as it should.
