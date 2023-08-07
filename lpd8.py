@@ -4,17 +4,16 @@ from pad import Pad
 from consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
 
 
-IDS_KNOBS = {i+1: i+70 for i in range(8)}
-IDS_PADS  = {i+1: i+36 for i in range(8)}
-
-
 class LPD8(MIDI_IO):
 
     def __init__(self, pattern="LPD8", n_knobs=8, n_pads=8):
         super().__init__(pattern)
 
-        self._mk_attrs(n_knobs, "knob", Knob, IDS_KNOBS)
-        self._mk_attrs(n_pads,  "pad",  Pad,  IDS_PADS)
+        n = self.send_which_program()
+        ids_knobs, ids_pads = self.send_get_program(n)
+
+        self._mk_attrs(n_knobs, "knob", Knob, ids_knobs)
+        self._mk_attrs(n_pads,  "pad",  Pad,  ids_pads)
 
 
     def _mk_attrs(self, n, prefix, Type, ids):
