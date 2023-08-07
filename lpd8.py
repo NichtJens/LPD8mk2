@@ -98,17 +98,11 @@ def parse_get_program_response(data):
     print("x      ", x1, x2, x3, x4)
 
     for i in range(8):
-        note, count1, count2, channel, *rest = rest
-        count1, count2, channel = sint((count1, count2, channel))
-        block = rest[:12]
+        note, cc, pg, channel, *rest = rest
+        unknown = rest[:12] # should contain: type (toggle/momentary), pressure message (off, channel, polyphonic), full level (on, off)
         rest = rest[12:]
-        print("Note   ", note, sint(note), "| count", count1, count2, "| channel", channel, "|", sint(block))
+        print("Note   ", note, sint(note), "| CC", cc, sint(cc), "| PG", pg, sint(pg), "| channel", channel, sint(channel), "|", sint(unknown))
         ids_pads[i+1] = sint(note)
-
-#        note = sysexData[8 + 4*i],
-#        programChange = sysexData[9 + 4*i],
-#        controlChange = sysexData[10 + 4*i],
-#        toggle = sysexData[11 + 4*i]
 
     for i in range(8):
         ctrl, cc, low, high, *rest = rest
