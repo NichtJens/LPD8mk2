@@ -1,6 +1,7 @@
 # References
 - https://www.akaipro.com/lpd8-mk2
 - https://github.com/charlesfleche/lpd8editor/blob/master/doc/SYSEX.md
+- https://github.com/bennigraf/lpd8-web-editor/blob/main/lpd8-web-editor-preact/src/LPD8Preset.js
 - https://github.com/DrLuke/python-lpd8/
 - https://github.com/zetof/LPD8/
 
