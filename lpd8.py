@@ -54,25 +54,32 @@ class LPD8(MIDI_IO):
 
 
 def parse_id_request_response(data):
-    start, channel, subid1, subid2, manid, fam1, fam2, dev1, dev2, ver1, ver2, ver3, end, *rest = data
-    print("Start  ", start)
-    print("Channel", channel)
-    print("Sub-ID ", subid1, subid2)
-    print("Man. ID", manid)
-    print("Family ", fam1, fam2)
-    print("Device ", dev1, dev2)
-    print("SW Ver.", ver1, ver2, ver3) # why only 3?
-    print("End    ", end)
-    print("Rest   ", rest)
+    desc = [
+        "Start",
+        "Channel",
+        "Sub-ID", "Sub-ID",
+        "Man. ID",
+        "Family", "Family",
+        "Device", "Device",
+        "SW Ver.", "SW Ver.", "SW Ver.", # why only 3?
+        "End",
+        "Rest"
+    ]
+    parsed = parse(desc, data)
+    print_table(parsed)
 
 
 def parse_which_program_response(data):
-    manid, fam, dev, cmd1, cmd2, cmd3, n_program = data
-    print("Man. ID", manid)
-    print("Family ", fam)
-    print("Device ", dev)
-    print("Command", cmd1, cmd2, cmd3)
-    print("n      ", n_program)
+    desc = [
+        "Man. ID",
+        "Family",
+        "Device",
+        "Command", "Command", "Command",
+        "n"
+    ]
+    parsed = parse(desc, data)
+    print_table(parsed)
+    n_program = parsed["n"]
     n_program = sint(n_program)
     return n_program
 
