@@ -59,9 +59,9 @@ def parse_id_request_response(data):
         "Channel",
         "Sub-ID", "Sub-ID",
         "Man. ID",
-        "Family", "Family",
+        "Family", # why only one?
         "Device", "Device",
-        "SW Ver.", "SW Ver.", "SW Ver.", # why only 3?
+        "SW Ver.", "SW Ver.", "SW Ver.", "SW Ver.",
         "End",
         "Rest"
     ]
