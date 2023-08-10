@@ -88,7 +88,7 @@ def parse_get_program_response(data):
     ids_pads  = {}
     ids_knobs = {}
 
-    desc = [
+    desc_head = [
         "Man. ID",
         "Family",
         "Device",
@@ -96,20 +96,38 @@ def parse_get_program_response(data):
         "n",
         "x", "x", "x", "x"
     ]
-    parsed = parse(desc, data)
+    parsed = parse(desc_head, data)
     rest = parsed.pop("Rest")
     print_table(parsed)
 
-    for i in range(8):
-        note, cc, pg, channel, *rest = rest
-        unknown = rest[:12] # should contain: type (toggle/momentary), pressure message (off, channel, polyphonic), full level (on, off)
-        rest = rest[12:]
-        print("Note   ", note, sint(note), "| CC", cc, sint(cc), "| PG", pg, sint(pg), "| channel", channel, sint(channel), "|", sint(unknown))
-        ids_pads[i+1] = sint(note)
+    desc_pad = [
+        "Note",
+        "CC",
+        "PG",
+        "Channel"
+    ]
 
     for i in range(8):
-        ctrl, cc, low, high, *rest = rest
-        print("Control", ctrl, sint(ctrl), "| CC", cc, "| low", low, "| high", high)
+        parsed = parse(desc_pad, rest)
+        rest = parsed.pop("Rest")
+        print_line(parsed)
+        unknown = rest[:12] # should contain: type (toggle/momentary), pressure message (off, channel, polyphonic), full level (on, off)
+        rest = rest[12:]
+        note = parsed["Note"]
+        ids_pads[i+1] = sint(note)
+
+    desc_knob = [
+        "Control",
+        "CC",
+        "low",
+        "high"
+    ]
+
+    for i in range(8):
+        parsed = parse(desc_knob, rest)
+        rest = parsed.pop("Rest", None)
+        print_line(parsed)
+        ctrl = parsed["Control"]
         ids_knobs[i+1] = sint(ctrl)
 
     if rest:
@@ -139,6 +157,10 @@ def print_table(d):
     length = max(len(i) for i in d)
     for k, v in d.items():
         print(k.ljust(length), v)
+
+
+def print_line(d):
+    print(" | ".join(f"{k} {v}" for k, v in d.items()))
 
 
 
