@@ -88,14 +88,17 @@ def parse_get_program_response(data):
     ids_pads  = {}
     ids_knobs = {}
 
-    manid, fam, dev, cmd1, cmd2, cmd3, n_program, x1, x2, x3, x4, *rest = data
-    print("Man. ID", manid)
-    print("Family ", fam)
-    print("Device ", dev)
-    print("Command", cmd1, cmd2, cmd3)
-    print("n      ", n_program)
-
-    print("x      ", x1, x2, x3, x4)
+    desc = [
+        "Man. ID",
+        "Family",
+        "Device",
+        "Command", "Command", "Command",
+        "n",
+        "x", "x", "x", "x"
+    ]
+    parsed = parse(desc, data)
+    rest = parsed.pop("Rest")
+    print_table(parsed)
 
     for i in range(8):
         note, cc, pg, channel, *rest = rest
