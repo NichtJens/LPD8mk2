@@ -82,22 +82,26 @@ RESP_ID_REQUEST = {
     "Rest":    Any
 }
 
-RESP_WHICH_PROGRAM = {
+
+RESP_HEADER = {
     "Man. ID": SYSEX_AKAI,
     "Family":  SYSEX_LPD8_FAMILY,
-    "Device":  SYSEX_LPD8_MK2_DEVICE,
+    "Device":  SYSEX_LPD8_MK2_DEVICE
+}
+
+RESP_WHICH_PROGRAM = {
+    **RESP_HEADER,
     "Command": [0x4, 0x0, 0x1],
     "n":       Any #TODO: can be 1..4
 }
 
 RESP_GET_PROGRAM_HEAD = {
-    "Man. ID": SYSEX_AKAI,
-    "Family":  SYSEX_LPD8_FAMILY,
-    "Device":  SYSEX_LPD8_MK2_DEVICE,
+    **RESP_HEADER,
     "Command": [0x3, 0x1, 0x29],
     "n":       Any, #TODO: can be 1..4
     "Unknown": [Any] * 4
 }
+
 
 RESP_GET_PROGRAM_PAD = [
     "Note",
