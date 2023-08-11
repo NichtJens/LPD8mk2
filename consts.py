@@ -74,7 +74,7 @@ RESP_ID_REQUEST = {
     "Start":   0x7e,
     "Channel": 0x0,
     "Sub-ID":  [0x6, 0x2],
-    "Man. ID": 0x47,
+    "Man. ID": SYSEX_AKAI,
     "Family":  0x4c, # why only one byte?
     "Device":  [0x0, 0x19],
     "SW Ver.": [Any] * 4,
@@ -83,17 +83,17 @@ RESP_ID_REQUEST = {
 }
 
 RESP_WHICH_PROGRAM = {
-    "Man. ID": 0x47,
-    "Family":  0x7f,
-    "Device":  0x4c,
+    "Man. ID": SYSEX_AKAI,
+    "Family":  SYSEX_LPD8_FAMILY,
+    "Device":  SYSEX_LPD8_MK2_DEVICE,
     "Command": [0x4, 0x0, 0x1],
     "n":       Any #TODO: can be 1..4
 }
 
 RESP_GET_PROGRAM_HEAD = {
-    "Man. ID": 0x47,
-    "Family":  0x7f,
-    "Device":  0x4c,
+    "Man. ID": SYSEX_AKAI,
+    "Family":  SYSEX_LPD8_FAMILY,
+    "Device":  SYSEX_LPD8_MK2_DEVICE,
     "Command": [0x3, 0x1, 0x29],
     "n":       Any, #TODO: can be 1..4
     "Unknown": [Any] * 4
