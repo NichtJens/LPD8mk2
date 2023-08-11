@@ -1,3 +1,5 @@
+from any import Any
+
 
 # Universal Identity Request
 SYSEX_ID_REQUEST = [
@@ -40,36 +42,62 @@ SYSEX_GET_PROGRAM = SYSEX_HEADER + [
 
 
 # SysEx response descriptions:
-# (repeat name n times if there are n bytes for that entry)
 
-RESP_ID_REQUEST = [
-    "Start",
-    "Channel",
-    "Sub-ID", "Sub-ID",
-    "Man. ID",
-    "Family", # why only one?
-    "Device", "Device",
-    "SW Ver.", "SW Ver.", "SW Ver.", "SW Ver.",
-    "End",
-    "Rest"
-]
+# Option 1
+# dict mapping name to expected value(s).
+# Values may be sequences of length n, then n bytes are read for that entry.
+# `Any` may be used if there's no expected value.
 
-RESP_WHICH_PROGRAM = [
-    "Man. ID",
-    "Family",
-    "Device",
-    "Command", "Command", "Command",
-    "n"
-]
+# Option 2
+# sequence of names, no expected value(s).
+# These are treated as if all values are `Any` in Option 1.
+# The name may be repeated n times, then n bytes are read for that entry.
 
-RESP_GET_PROGRAM_HEAD = [
-    "Man. ID",
-    "Family",
-    "Device",
-    "Command", "Command", "Command",
-    "n",
-    "x", "x", "x", "x"
-]
+# Example:
+#
+#    desc_list = [
+#        "x",
+#        "y", "y",
+#        "z"
+#    ]
+#
+# corresponds to:
+#
+#    desc_dict = {
+#        "x": Any,
+#        "y": [Any, Any],
+#        "z": Any
+#    }
+
+
+RESP_ID_REQUEST = {
+    "Start":   0x7e,
+    "Channel": 0x0,
+    "Sub-ID":  [0x6, 0x2],
+    "Man. ID": 0x47,
+    "Family":  0x4c, # why only one byte?
+    "Device":  [0x0, 0x19],
+    "SW Ver.": [Any] * 4,
+    "End":     0x7f,
+    "Rest":    Any
+}
+
+RESP_WHICH_PROGRAM = {
+    "Man. ID": 0x47,
+    "Family":  0x7f,
+    "Device":  0x4c,
+    "Command": [0x4, 0x0, 0x1],
+    "n":       Any #TODO: can be 1..4
+}
+
+RESP_GET_PROGRAM_HEAD = {
+    "Man. ID": 0x47,
+    "Family":  0x7f,
+    "Device":  0x4c,
+    "Command": [0x3, 0x1, 0x29],
+    "n":       Any, #TODO: can be 1..4
+    "Unknown": [Any] * 4
+}
 
 RESP_GET_PROGRAM_PAD = [
     "Note",
