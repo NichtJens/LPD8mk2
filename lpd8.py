@@ -2,6 +2,7 @@ from midi_io import MIDI_IO
 from knob import Knob
 from pad import Pad
 from consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
+from consts import RESP_ID_REQUEST, RESP_WHICH_PROGRAM, RESP_GET_PROGRAM_HEAD, RESP_GET_PROGRAM_PAD, RESP_GET_PROGRAM_KNOB
 
 
 class LPD8(MIDI_IO):
@@ -54,30 +55,12 @@ class LPD8(MIDI_IO):
 
 
 def parse_id_request_response(data):
-    desc = [
-        "Start",
-        "Channel",
-        "Sub-ID", "Sub-ID",
-        "Man. ID",
-        "Family", # why only one?
-        "Device", "Device",
-        "SW Ver.", "SW Ver.", "SW Ver.", "SW Ver.",
-        "End",
-        "Rest"
-    ]
-    parsed = parse(desc, data)
+    parsed = parse(RESP_ID_REQUEST, data)
     print_table(parsed)
 
 
 def parse_which_program_response(data):
-    desc = [
-        "Man. ID",
-        "Family",
-        "Device",
-        "Command", "Command", "Command",
-        "n"
-    ]
-    parsed = parse(desc, data)
+    parsed = parse(RESP_WHICH_PROGRAM, data)
     print_table(parsed)
     n_program = parsed["n"]
     n_program = sint(n_program)
@@ -88,27 +71,12 @@ def parse_get_program_response(data):
     ids_pads  = {}
     ids_knobs = {}
 
-    desc_head = [
-        "Man. ID",
-        "Family",
-        "Device",
-        "Command", "Command", "Command",
-        "n",
-        "x", "x", "x", "x"
-    ]
-    parsed = parse(desc_head, data)
+    parsed = parse(RESP_GET_PROGRAM_HEAD, data)
     rest = parsed.pop("Rest")
     print_table(parsed)
 
-    desc_pad = [
-        "Note",
-        "CC",
-        "PG",
-        "Channel"
-    ]
-
     for i in range(8):
-        parsed = parse(desc_pad, rest)
+        parsed = parse(RESP_GET_PROGRAM_PAD, rest)
         rest = parsed.pop("Rest")
         print_line(parsed)
         unknown = rest[:12] # should contain: type (toggle/momentary), pressure message (off, channel, polyphonic), full level (on, off)
@@ -116,15 +84,8 @@ def parse_get_program_response(data):
         note = parsed["Note"]
         ids_pads[i+1] = sint(note)
 
-    desc_knob = [
-        "Control",
-        "CC",
-        "low",
-        "high"
-    ]
-
     for i in range(8):
-        parsed = parse(desc_knob, rest)
+        parsed = parse(RESP_GET_PROGRAM_KNOB, rest)
         rest = parsed.pop("Rest", None)
         print_line(parsed)
         ctrl = parsed["Control"]

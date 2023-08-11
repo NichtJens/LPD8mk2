@@ -37,3 +37,51 @@ SYSEX_GET_PROGRAM = SYSEX_HEADER + [
 
 
 
+# SysEx response descriptions:
+# (repeat name n times if there are n bytes for that entry)
+
+RESP_ID_REQUEST = [
+    "Start",
+    "Channel",
+    "Sub-ID", "Sub-ID",
+    "Man. ID",
+    "Family", # why only one?
+    "Device", "Device",
+    "SW Ver.", "SW Ver.", "SW Ver.", "SW Ver.",
+    "End",
+    "Rest"
+]
+
+RESP_WHICH_PROGRAM = [
+    "Man. ID",
+    "Family",
+    "Device",
+    "Command", "Command", "Command",
+    "n"
+]
+
+RESP_GET_PROGRAM_HEAD = [
+    "Man. ID",
+    "Family",
+    "Device",
+    "Command", "Command", "Command",
+    "n",
+    "x", "x", "x", "x"
+]
+
+RESP_GET_PROGRAM_PAD = [
+    "Note",
+    "CC",
+    "PG",
+    "Channel"
+]
+
+RESP_GET_PROGRAM_KNOB = [
+    "Control",
+    "CC",
+    "low",
+    "high"
+]
+
+
+
