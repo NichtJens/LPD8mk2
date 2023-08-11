@@ -12,8 +12,10 @@ def parse(desc, data):
         n = len(ref) if isinstance(ref, Sequence) else 1 #TODO?
         item, data = data[:n], data[n:]
         res[name].extend(item)
+
     if data:
         res["Rest"] = data
+
     res = unpack_single_values(res)
 
     for name, ref in desc.items():
