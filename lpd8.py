@@ -1,6 +1,7 @@
 from midi_io import MIDI_IO
 from knob import Knob
 from pad import Pad
+from consts import N_PADS, N_KNOBS
 from consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
 from consts import RESP_ID_REQUEST, RESP_WHICH_PROGRAM, RESP_GET_PROGRAM_HEAD, RESP_GET_PROGRAM_PAD, RESP_GET_PROGRAM_KNOB
 
@@ -75,7 +76,7 @@ def parse_get_program_response(data):
     rest = parsed.pop("Rest")
     print_table(parsed)
 
-    for i in range(8):
+    for i in range(N_PADS):
         parsed = parse(RESP_GET_PROGRAM_PAD, rest)
         rest = parsed.pop("Rest")
         print_line(parsed)
@@ -84,7 +85,7 @@ def parse_get_program_response(data):
         note = parsed["Note"]
         ids_pads[i+1] = sint(note)
 
-    for i in range(8):
+    for i in range(N_KNOBS):
         parsed = parse(RESP_GET_PROGRAM_KNOB, rest)
         rest = parsed.pop("Rest", None)
         print_line(parsed)
