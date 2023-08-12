@@ -4,7 +4,7 @@ from pad import Pad
 from consts import N_PADS, N_KNOBS
 from consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
 from consts import RESP_ID_REQUEST, RESP_WHICH_PROGRAM, RESP_GET_PROGRAM_HEAD, RESP_GET_PROGRAM_PAD, RESP_GET_PROGRAM_KNOB
-from utils import parse, print_table, print_line, sint
+from utils import parse, print_table, print_line
 
 
 class LPD8(MIDI_IO):
@@ -65,7 +65,7 @@ def parse_which_program_response(data):
     parsed = parse(RESP_WHICH_PROGRAM, data)
     print_table(parsed)
     n_program = parsed["n"]
-    n_program = sint(n_program)
+    n_program = int(n_program)
     return n_program
 
 
@@ -84,14 +84,14 @@ def parse_get_program_response(data):
         unknown = rest[:12] # should contain: type (toggle/momentary), pressure message (off, channel, polyphonic), full level (on, off)
         rest = rest[12:]
         note = parsed["Note"]
-        ids_pads[i+1] = sint(note)
+        ids_pads[i+1] = int(note)
 
     for i in range(N_KNOBS):
         parsed = parse(RESP_GET_PROGRAM_KNOB, rest)
         rest = parsed.pop("Rest", None)
         print_line(parsed)
         ctrl = parsed["Control"]
-        ids_knobs[i+1] = sint(ctrl)
+        ids_knobs[i+1] = int(ctrl)
 
     if rest:
         print("Rest", rest)

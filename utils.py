@@ -20,10 +20,12 @@ def parse(desc, data):
 
     for name, ref in desc.items():
         found = res[name]
-        found = sint(found) #TODO: this is probably not needed / should be fixed elsewhere
 #        print("compare", found, ref, "->", found == ref) #TODO: remove
         if found != ref:
-            msg = f'"{name}" should be {ref} ({shex(ref)}) but is {found} ({shex(found)})'
+            # ref are regular int, found are Hex => format both identically
+            sref = fmt(ref)
+            sfound = fmt(found)
+            msg = f'"{name}" should be {sref} but is {sfound}'
             raise ValueError(msg)
 
     return res
@@ -53,23 +55,34 @@ def print_line(d):
 
 
 
-def sint(s, base=0):
-    """
-    Convert literal string integers to integers. Note from int():
-    For base 0, the string is interpreted in a similar way to an integer literal in code,
-    in that the actual base is 2, 8, 10, or 16 as determined by the prefix. (b=2, o=8, x=16)
-    """
-    if isinstance(s, str):
-        return int(s, base=base)
-    else:
-        return [int(i, base=base) for i in s]
 
 
-def shex(i):
-    if isinstance(i, int):
-        return hex(i)
-    else:
-        return [hex(int(j)) for j in i]
+#TODO: this might be a little overengineered
+
+def fmt(x):
+    sdec = fmt_dec(x)
+    shex = fmt_hex(x)
+    return f"{sdec} ({shex})"
+
+def dec(x):
+    return str(int(x))
+
+def make_fmt_sequence_aware(fmt):
+    def wrapper(x):
+        if isinstance(x, Sequence):
+            fmted = ", ".join(fmt(j) for j in x)
+            return f"[{fmted}]"
+        else:
+            return fmt(x)
+    return wrapper
+
+def make_fmt_Any_aware(fmt):
+    def wrapper(x):
+        return "Any" if x is Any else fmt(x)
+    return wrapper
+
+fmt_dec = make_fmt_sequence_aware(make_fmt_Any_aware(dec))
+fmt_hex = make_fmt_sequence_aware(make_fmt_Any_aware(hex))
 
 
 

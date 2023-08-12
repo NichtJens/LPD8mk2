@@ -3,6 +3,7 @@ from queue import Queue
 import mido
 from debug import debug
 from msgdisp import MessageDispatcher
+from hex import Hex
 
 
 class MIDI_IO(MessageDispatcher):
@@ -21,7 +22,7 @@ class MIDI_IO(MessageDispatcher):
 
     @debug
     def handle_sysex(self, data):
-        data = [hex(i) for i in data]
+        data = [Hex(i) for i in data]
         self.queue_sysex.put(data)
 
 
