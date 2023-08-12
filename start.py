@@ -31,8 +31,9 @@ lpd8.send_id_request()
 lpd8.send_which_program()
 
 for i in range(4):
-    x = lpd8.send_get_program(i+1)
-    print(x)
+    knobs, pads = lpd8.send_get_program(i+1)
+    print("Knobs:", knobs)
+    print("Pads: ", pads)
 
 
 
