@@ -1,9 +1,11 @@
 from fnmatch import fnmatch
 from queue import Queue
+
 import mido
-from debug import debug
-from msgdisp import MessageDispatcher
-from hex import Hex
+
+from .debug import debug
+from .msgdisp import MessageDispatcher
+from .hex import Hex
 
 
 class MIDI_IO(MessageDispatcher):

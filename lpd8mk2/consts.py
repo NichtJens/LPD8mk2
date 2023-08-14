@@ -1,4 +1,4 @@
-from any import Any
+from .any import Any
 
 
 # Universal Identity Request

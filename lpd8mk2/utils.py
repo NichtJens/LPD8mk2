@@ -1,6 +1,7 @@
 from collections import defaultdict
 from collections.abc import Sequence, Mapping
-from consts import Any
+
+from .consts import Any
 
 
 def parse(desc, data):

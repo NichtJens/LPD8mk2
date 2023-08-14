@@ -1,4 +1,4 @@
-from cbctrl import CallbackController
+from .cbctrl import CallbackController
 
 
 class Pad:

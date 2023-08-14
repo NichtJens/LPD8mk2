@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from time import sleep
-from lpd8 import LPD8
+from lpd8mk2 import LPD8
 
 
 lpd8 = LPD8("LPD8")

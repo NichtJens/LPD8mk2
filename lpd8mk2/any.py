@@ -1,4 +1,4 @@
-from debug import debug
+from .debug import debug
 
 
 class Any:
