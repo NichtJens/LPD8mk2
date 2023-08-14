@@ -33,18 +33,31 @@ class MIDI_IO(MessageDispatcher):
 
 def find_and_open_port(pattern):
     ports = mido.get_ioport_names()
-    ports = set(ports)
-    for n in ports:
-        if fnmatch(n, f"*{pattern}*"):
-            return mido.open_ioport(n)
-    print_available(ports)
-    raise ValueError(f'cannot find device for pattern "{pattern}"')
+    ports = sorted(set(ports))
+    matching = [n for n in ports if fnmatch(n, f"*{pattern}*")]
+    n_matching = len(matching)
+
+    if n_matching == 1:
+        n = matching[0]
+        return mido.open_ioport(n)
+
+    if n_matching == 0:
+        msg = f'cannot find device for pattern "{pattern}"'
+        header = "available ports"
+        which = ports
+    else:
+        msg = f'pattern "{pattern}" is ambiguous'
+        header = "matching ports"
+        which = matching
+
+    print_list(header, which)
+    raise ValueError(msg)
 
 
-def print_available(ports):
+def print_list(header, items):
     print()
-    print("available ports:")
-    for n in ports:
+    print(f"{header}:")
+    for n in items:
         print("-", n)
     print()
 
