@@ -1,5 +1,5 @@
-from itertools import count
 from concurrent.futures import ThreadPoolExecutor
+from itertools import count
 
 
 class CallbackController:

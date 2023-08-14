@@ -1,10 +1,11 @@
 from .midi_io import MIDI_IO
 from .knob import Knob
 from .pad import Pad
-from .consts import N_PADS, N_KNOBS
-from .consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
-from .consts import RESP_ID_REQUEST, RESP_WHICH_PROGRAM, RESP_GET_PROGRAM_HEAD, RESP_GET_PROGRAM_PAD, RESP_GET_PROGRAM_KNOB
 from .utils import parse, print_table, print_line
+
+from .consts import N_PADS, N_KNOBS
+from .consts import RESP_ID_REQUEST, RESP_WHICH_PROGRAM, RESP_GET_PROGRAM_HEAD, RESP_GET_PROGRAM_PAD, RESP_GET_PROGRAM_KNOB
+from .consts import SYSEX_ID_REQUEST, SYSEX_WHICH_PROGRAM, SYSEX_GET_PROGRAM
 
 
 class LPD8(MIDI_IO):

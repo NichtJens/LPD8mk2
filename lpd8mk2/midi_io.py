@@ -4,8 +4,8 @@ from queue import Queue
 import mido
 
 from .debug import debug
-from .msgdisp import MessageDispatcher
 from .hex import Hex
+from .msgdisp import MessageDispatcher
 
 
 class MIDI_IO(MessageDispatcher):
